@@ -65,17 +65,19 @@ jobs:
             console.log('✅ SVG files generated successfully!');
 
             function generateBreakoutSVG(weeks, isDark) {
-              const cellSize = 12;
-              const cellGap = 3;
-              const paddleWidth = 60;
-              const paddleHeight = 8;
-              const ballRadius = 4;
+              const cellSize = 11;
+              const cellGap = 2;
+              const paddleWidth = 80;
+              const paddleHeight = 10;
+              const ballRadius = 5;
               
-              const width = weeks.length * (cellSize + cellGap) + 40;
-              const height = 7 * (cellSize + cellGap) + 100;
+              const gridWidth = Math.min(weeks.length, 53);
+              const width = gridWidth * (cellSize + cellGap) + 60;
+              const height = 7 * (cellSize + cellGap) + 150;
 
               const bgColor = isDark ? '#0d1117' : '#ffffff';
               const textColor = isDark ? '#c9d1d9' : '#24292f';
+              const borderColor = isDark ? '#30363d' : '#d0d7de';
               const level0 = isDark ? '#161b22' : '#ebedf0';
               const level1 = isDark ? '#0e4429' : '#9be9a8';
               const level2 = isDark ? '#006d32' : '#40c463';
@@ -83,14 +85,15 @@ jobs:
               const level4 = isDark ? '#39d353' : '#216e39';
               const paddleColor = isDark ? '#58a6ff' : '#0969da';
               const ballColor = isDark ? '#f85149' : '#cf222e';
+              const glowColor = isDark ? '#58a6ff' : '#0969da';
 
               let bricks = '';
-              let brickData = [];
+              const recentWeeks = weeks.slice(-gridWidth);
               
-              weeks.forEach((week, weekIndex) => {
+              recentWeeks.forEach((week, weekIndex) => {
                 week.contributionDays.forEach((day, dayIndex) => {
-                  const x = weekIndex * (cellSize + cellGap) + 20;
-                  const y = dayIndex * (cellSize + cellGap) + 20;
+                  const x = weekIndex * (cellSize + cellGap) + 30;
+                  const y = dayIndex * (cellSize + cellGap) + 30;
                   const count = day.contributionCount;
                   
                   let color = level0;
@@ -99,85 +102,153 @@ jobs:
                   if (count > 10) color = level3;
                   if (count > 15) color = level4;
 
-                  brickData.push({ x, y, color, id: `brick-${weekIndex}-${dayIndex}` });
+                  const animDelay = (weekIndex * 7 + dayIndex) * 0.05;
                   
                   bricks += `
-                    <rect id="brick-${weekIndex}-${dayIndex}" 
-                          x="${x}" y="${y}" 
-                          width="${cellSize}" height="${cellSize}" 
-                          rx="2" fill="${color}">
-                      <animate attributeName="opacity"
-                               begin="hit${weekIndex}${dayIndex}.begin"
-                               dur="0.3s"
-                               from="1" to="0"
-                               fill="freeze"/>
-                    </rect>`;
+                    <g>
+                      <rect x="${x}" y="${y}" 
+                            width="${cellSize}" height="${cellSize}" 
+                            rx="2" fill="${color}" 
+                            stroke="${borderColor}" stroke-width="0.5">
+                        <animate attributeName="opacity"
+                                 begin="${animDelay}s"
+                                 dur="0.4s"
+                                 values="1;0.3;0"
+                                 fill="freeze"/>
+                        <animateTransform attributeName="transform"
+                                          type="scale"
+                                          begin="${animDelay}s"
+                                          dur="0.4s"
+                                          values="1 1;1.2 1.2;0.8 0.8"
+                                          additive="sum"
+                                          fill="freeze"/>
+                      </rect>
+                      ${count > 10 ? `
+                      <circle cx="${x + cellSize/2}" cy="${y + cellSize/2}" r="${cellSize/2 + 2}" 
+                              fill="none" stroke="${glowColor}" stroke-width="1" opacity="0">
+                        <animate attributeName="opacity"
+                                 begin="${animDelay}s"
+                                 dur="0.3s"
+                                 values="0;0.6;0"
+                                 fill="freeze"/>
+                        <animate attributeName="r"
+                                 begin="${animDelay}s"
+                                 dur="0.3s"
+                                 values="${cellSize/2};${cellSize/2 + 4};${cellSize/2 + 6}"
+                                 fill="freeze"/>
+                      </circle>` : ''}
+                    </g>`;
                 });
               });
 
-              const paddleY = height - 30;
-              const ballStartX = width / 2;
-              const ballStartY = paddleY - 20;
+              const paddleY = height - 60;
+              const paddleStartX = 30;
+              const paddleEndX = width - paddleWidth - 30;
+              const ballStartX = 40;
+              const ballStartY = paddleY - 15;
+
+              const totalDuration = (gridWidth * 7 * 0.05) + 0.5;
+              
+              const generateBallPath = () => {
+                let path = `M ${ballStartX} ${ballStartY}`;
+                const bounces = 30;
+                let currentX = ballStartX;
+                let currentY = ballStartY;
+                
+                for (let i = 0; i < bounces; i++) {
+                  const nextX = Math.min(currentX + (width - 60) / bounces, width - 40);
+                  const peakY = 40 + Math.random() * 30;
+                  const controlX = (currentX + nextX) / 2;
+                  
+                  path += ` Q ${controlX} ${peakY} ${nextX} ${paddleY - 15}`;
+                  currentX = nextX;
+                }
+                
+                return path;
+              };
 
               return `<?xml version="1.0" encoding="UTF-8"?>
             <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-              <style>
-                @keyframes paddle-move {
-                  0%, 100% { transform: translateX(0); }
-                  25% { transform: translateX(-100px); }
-                  50% { transform: translateX(0); }
-                  75% { transform: translateX(100px); }
-                }
-                
-                @keyframes ball-move {
-                  0% { transform: translate(0, 0); }
-                  10% { transform: translate(50px, -80px); }
-                  20% { transform: translate(120px, -150px); }
-                  30% { transform: translate(200px, -100px); }
-                  40% { transform: translate(280px, -170px); }
-                  50% { transform: translate(360px, -90px); }
-                  60% { transform: translate(440px, -160px); }
-                  70% { transform: translate(520px, -110px); }
-                  80% { transform: translate(600px, -140px); }
-                  90% { transform: translate(680px, -120px); }
-                  100% { transform: translate(760px, -100px); }
-                }
-
-                .paddle { animation: paddle-move 8s ease-in-out infinite; }
-                .ball { animation: ball-move 8s linear infinite; }
-              </style>
+              <defs>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+                <linearGradient id="paddleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:${paddleColor};stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:${paddleColor};stop-opacity:0.7" />
+                </linearGradient>
+                <radialGradient id="ballGradient" cx="30%" cy="30%">
+                  <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.8" />
+                  <stop offset="100%" style="stop-color:${ballColor};stop-opacity:1" />
+                </radialGradient>
+              </defs>
 
               <rect width="100%" height="100%" fill="${bgColor}"/>
               
-              <text x="20" y="${height - 50}" font-family="monospace" font-size="14" fill="${textColor}">
-                🎮 Breakout Contributions Game
+              <text x="${width/2}" y="18" 
+                    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" 
+                    font-size="14" font-weight="600" fill="${textColor}" 
+                    text-anchor="middle">
+                🎮 Breakout Contributions
               </text>
               
-              <g id="bricks">${bricks}</g>
+              <rect x="10" y="10" width="${width - 20}" height="${height - 20}" 
+                    rx="8" fill="none" stroke="${borderColor}" stroke-width="2" opacity="0.3"/>
+              
+              <g id="bricks">
+                ${bricks}
+              </g>
 
-              <g class="paddle">
-                <rect x="${width / 2 - paddleWidth / 2}" y="${paddleY}" 
+              <g id="paddle">
+                <rect x="${paddleStartX}" y="${paddleY}" 
                       width="${paddleWidth}" height="${paddleHeight}" 
-                      rx="4" fill="${paddleColor}">
-                  <animate attributeName="fill"
-                           values="${paddleColor};${ballColor};${paddleColor}"
-                           dur="2s"
+                      rx="5" fill="url(#paddleGradient)" filter="url(#glow)">
+                  <animate attributeName="x"
+                           dur="${totalDuration}s"
+                           values="${paddleStartX};${paddleStartX + 50};${paddleStartX + 100};${paddleEndX - 100};${paddleEndX - 50};${paddleEndX};${paddleEndX - 50};${paddleStartX + 150};${paddleStartX + 80};${paddleStartX}"
+                           repeatCount="indefinite"/>
+                </rect>
+                <rect x="${paddleStartX}" y="${paddleY}" 
+                      width="${paddleWidth}" height="2" 
+                      rx="1" fill="#ffffff" opacity="0.5">
+                  <animate attributeName="x"
+                           dur="${totalDuration}s"
+                           values="${paddleStartX};${paddleStartX + 50};${paddleStartX + 100};${paddleEndX - 100};${paddleEndX - 50};${paddleEndX};${paddleEndX - 50};${paddleStartX + 150};${paddleStartX + 80};${paddleStartX}"
                            repeatCount="indefinite"/>
                 </rect>
               </g>
 
-              <g class="ball">
-                <circle cx="${ballStartX}" cy="${ballStartY}" r="${ballRadius}" fill="${ballColor}">
+              <g id="ball">
+                <circle r="${ballRadius}" fill="url(#ballGradient)" filter="url(#glow)">
+                  <animateMotion dur="${totalDuration}s" repeatCount="indefinite" path="${generateBallPath()}"/>
                   <animate attributeName="r"
-                           values="${ballRadius};${ballRadius + 2};${ballRadius}"
-                           dur="0.3s"
+                           dur="0.2s"
+                           values="${ballRadius};${ballRadius + 1};${ballRadius}"
+                           repeatCount="indefinite"/>
+                </circle>
+                <circle r="${ballRadius + 3}" fill="none" stroke="${ballColor}" stroke-width="1" opacity="0.3">
+                  <animateMotion dur="${totalDuration}s" repeatCount="indefinite" path="${generateBallPath()}"/>
+                  <animate attributeName="r"
+                           dur="0.4s"
+                           values="${ballRadius + 3};${ballRadius + 5};${ballRadius + 3}"
+                           repeatCount="indefinite"/>
+                  <animate attributeName="opacity"
+                           dur="0.4s"
+                           values="0.3;0.1;0.3"
                            repeatCount="indefinite"/>
                 </circle>
               </g>
 
-              ${brickData.map((brick, index) => `
-                <set attributeName="display" to="none" begin="${(index * 0.1).toFixed(1)}s" id="hit${brick.id.split('-')[1]}${brick.id.split('-')[2]}"/>
-              `).join('')}
+              <text x="${width/2}" y="${height - 15}" 
+                    font-family="monospace" 
+                    font-size="11" fill="${textColor}" 
+                    text-anchor="middle" opacity="0.6">
+                ${recentWeeks.reduce((sum, week) => sum + week.contributionDays.reduce((s, d) => s + d.contributionCount, 0), 0)} contributions destroyed 💥
+              </text>
 
             </svg>`;
             }
