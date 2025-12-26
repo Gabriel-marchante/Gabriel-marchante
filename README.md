@@ -6,9 +6,12 @@
 ---
 
 ## 🧠 Tecnologías
-- HTML, CSS, JavaScript                                     - Docker
-- Git & GitHub                                              - Vue.js
-- TypeScript                                                - Hibernate
+- HTML, CSS, JavaScript
+- Docker
+- Git & GitHub
+- Vue.js
+- TypeScript
+- Hibernate
 
 ---
 
