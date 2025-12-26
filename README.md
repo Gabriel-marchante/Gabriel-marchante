@@ -21,9 +21,10 @@
 - Email: gabrielmarchantebanuls1975@gmail.com
 
 ---
-## 🕹️ Mi Mini Juego Animado
+
+## 🕹️ Mi Mini Breakout
 <p align="center">
-  <img src="https://github.com/Gabriel-marchante/assets/raw/main/migifanimado.gif" />
+  <img src="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph-dark.svg" alt="Mini Juego Animado" />
 </p>
 
 ---
