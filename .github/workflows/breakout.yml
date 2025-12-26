@@ -1,0 +1,203 @@
+name: Generate Breakout Animation
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"  # cada 12 horas
+  workflow_dispatch:  # permite ejecutar manualmente
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate Breakout SVG
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Crear directorio dist si no existe
+            const distDir = path.join(process.cwd(), 'dist');
+            if (!fs.existsSync(distDir)) {
+              fs.mkdirSync(distDir, { recursive: true });
+            }
+
+            // Obtener contribuciones del usuario
+            const query = `
+              query($userName:String!) {
+                user(login: $userName) {
+                  contributionsCollection {
+                    contributionCalendar {
+                      weeks {
+                        contributionDays {
+                          contributionCount
+                          date
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `;
+
+            const variables = {
+              userName: context.repo.owner
+            };
+
+            const result = await github.graphql(query, variables);
+            const weeks = result.user.contributionsCollection.contributionCalendar.weeks;
+
+            // Generar SVG con animación Breakout
+            const svgContent = generateBreakoutSVG(weeks, false);
+            const svgContentDark = generateBreakoutSVG(weeks, true);
+
+            fs.writeFileSync(path.join(distDir, 'breakout-contribution-graph.svg'), svgContent);
+            fs.writeFileSync(path.join(distDir, 'breakout-contribution-graph-dark.svg'), svgContentDark);
+
+            console.log('✅ SVG files generated successfully!');
+
+            function generateBreakoutSVG(weeks, isDark) {
+              const cellSize = 12;
+              const cellGap = 3;
+              const paddleWidth = 60;
+              const paddleHeight = 8;
+              const ballRadius = 4;
+              
+              const width = weeks.length * (cellSize + cellGap) + 40;
+              const height = 7 * (cellSize + cellGap) + 100;
+
+              const bgColor = isDark ? '#0d1117' : '#ffffff';
+              const textColor = isDark ? '#c9d1d9' : '#24292f';
+              const level0 = isDark ? '#161b22' : '#ebedf0';
+              const level1 = isDark ? '#0e4429' : '#9be9a8';
+              const level2 = isDark ? '#006d32' : '#40c463';
+              const level3 = isDark ? '#26a641' : '#30a14e';
+              const level4 = isDark ? '#39d353' : '#216e39';
+              const paddleColor = isDark ? '#58a6ff' : '#0969da';
+              const ballColor = isDark ? '#f85149' : '#cf222e';
+
+              let bricks = '';
+              let brickData = [];
+              
+              weeks.forEach((week, weekIndex) => {
+                week.contributionDays.forEach((day, dayIndex) => {
+                  const x = weekIndex * (cellSize + cellGap) + 20;
+                  const y = dayIndex * (cellSize + cellGap) + 20;
+                  const count = day.contributionCount;
+                  
+                  let color = level0;
+                  if (count > 0) color = level1;
+                  if (count > 5) color = level2;
+                  if (count > 10) color = level3;
+                  if (count > 15) color = level4;
+
+                  brickData.push({ x, y, color, id: `brick-${weekIndex}-${dayIndex}` });
+                  
+                  bricks += `
+                    <rect id="brick-${weekIndex}-${dayIndex}" 
+                          x="${x}" y="${y}" 
+                          width="${cellSize}" height="${cellSize}" 
+                          rx="2" fill="${color}">
+                      <animate attributeName="opacity"
+                               begin="hit${weekIndex}${dayIndex}.begin"
+                               dur="0.3s"
+                               from="1" to="0"
+                               fill="freeze"/>
+                    </rect>`;
+                });
+              });
+
+              const paddleY = height - 30;
+              const ballStartX = width / 2;
+              const ballStartY = paddleY - 20;
+
+              return `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes paddle-move {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-100px); }
+      50% { transform: translateX(0); }
+      75% { transform: translateX(100px); }
+    }
+    
+    @keyframes ball-move {
+      0% { transform: translate(0, 0); }
+      10% { transform: translate(50px, -80px); }
+      20% { transform: translate(120px, -150px); }
+      30% { transform: translate(200px, -100px); }
+      40% { transform: translate(280px, -170px); }
+      50% { transform: translate(360px, -90px); }
+      60% { transform: translate(440px, -160px); }
+      70% { transform: translate(520px, -110px); }
+      80% { transform: translate(600px, -140px); }
+      90% { transform: translate(680px, -120px); }
+      100% { transform: translate(760px, -100px); }
+    }
+
+    .paddle { animation: paddle-move 8s ease-in-out infinite; }
+    .ball { animation: ball-move 8s linear infinite; }
+  </style>
+
+  <rect width="100%" height="100%" fill="${bgColor}"/>
+  
+  <text x="20" y="${height - 50}" font-family="monospace" font-size="14" fill="${textColor}">
+    🎮 Breakout Contributions Game
+  </text>
+  
+  <!-- Bricks (contribuciones) -->
+  <g id="bricks">
+    ${bricks}
+  </g>
+
+  <!-- Paddle (paleta) -->
+  <g class="paddle">
+    <rect x="${width / 2 - paddleWidth / 2}" y="${paddleY}" 
+          width="${paddleWidth}" height="${paddleHeight}" 
+          rx="4" fill="${paddleColor}">
+      <animate attributeName="fill"
+               values="${paddleColor};${ballColor};${paddleColor}"
+               dur="2s"
+               repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Ball (pelota) -->
+  <g class="ball">
+    <circle cx="${ballStartX}" cy="${ballStartY}" r="${ballRadius}" fill="${ballColor}">
+      <animate attributeName="r"
+               values="${ballRadius};${ballRadius + 2};${ballRadius}"
+               dur="0.3s"
+               repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Eventos de colisión invisibles -->
+  ${brickData.map((brick, index) => `
+    <set attributeName="display" to="none" begin="${(index * 0.1).toFixed(1)}s" id="hit${brick.id.split('-')[1]}${brick.id.split('-')[2]}"/>
+  `).join('')}
+
+</svg>`;
+            }
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: output
+          force_orphan: true
