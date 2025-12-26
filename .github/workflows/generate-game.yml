@@ -2,8 +2,8 @@ name: Generate Snake
 
 on:
   schedule:
-    - cron: "0 */12 * * *" # Se ejecuta cada 12h automáticamente
-  workflow_dispatch:  # Permite ejecutarlo manualmente
+    - cron: "0 */12 * * *"  # cada 12h
+  workflow_dispatch:  # permite ejecutar manualmente
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      - name: Publish
+      - name: Publish to output branch
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: output
