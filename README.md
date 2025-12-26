@@ -15,12 +15,6 @@
 
 ---
 
-## 📂 Proyectos destacados
-- 🔹 [Nombre del proyecto](link)
-- 🔹 [Nombre del proyecto](link)
-
----
-
 ## 📫 Contacto
 - GitHub: https://github.com/Gabriel-marchante
 - LinkedIn: (https://www.linkedin.com/in/gabriel-m-833856242/)
