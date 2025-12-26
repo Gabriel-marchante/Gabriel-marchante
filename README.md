@@ -1,16 +1,37 @@
-## Hi there 👋
+# 👋 Hola, soy Gabriel
 
-<!--
-**Gabriel-marchante/Gabriel-marchante** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+-  Desarrollador en formación apasionado por la tecnología y el aprendizaje constante.  
+-  Interesado en desarrollo web y proyectos prácticos.
 
-Here are some ideas to get you started:
+---
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## 🧠 Tecnologías
+- HTML, CSS, JavaScript
+- Git & GitHub
+- TypeScript
+- Docker
+- Vue.js
+- Hibernate
+
+---
+
+## 📂 Proyectos destacados
+- 🔹 [Nombre del proyecto](link)
+- 🔹 [Nombre del proyecto](link)
+
+---
+
+## 📫 Contacto
+- GitHub: https://github.com/Gabriel-marchante
+- LinkedIn: (https://www.linkedin.com/in/gabriel-m-833856242/)
+- Email: gabrielmarchantebanuls1975@gmail.com
+
+---
+## 🕹️ Mi Mini Juego Animado
+<p align="center">
+  <img src="https://github.com/Gabriel-marchante/assets/raw/main/migifanimado.gif" />
+</p>
+
+---
+
+⭐ Si puedes imaginar-lo, puedes programarlo.
