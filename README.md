@@ -17,7 +17,7 @@
 
 ## 📫 Contacto
 - GitHub: github.com/Gabriel-marchante
-- LinkedIn: linkedin.com/in/gabriel-m-833856242
+- LinkedIn: https://www.linkedin.com/in/gabriel-m-833856242/
 - Email: gabrielmarchantebanuls1975@gmail.com
 
 ---
