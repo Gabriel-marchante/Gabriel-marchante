@@ -65,7 +65,7 @@ Proyecto backend desarrollado en Java.
 
 <div align="center">
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Gabriel-marchante&show_icons=true&theme=tokyonight&hide_border=true&locale=es)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Gabriel-marchante&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&include_all_commits=true)
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Gabriel-marchante&layout=compact&theme=tokyonight&hide_border=true&locale=es)
 
 </div>
@@ -84,6 +84,6 @@ Proyecto backend desarrollado en Java.
 
 <div align="center">
 
-*"Si puedes imaginarlo, puedes programarlo."* ⭐
+*"Si puedes imaginarlo, puedes programarlo."* 
 
 </div>
