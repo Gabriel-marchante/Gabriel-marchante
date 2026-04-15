@@ -64,10 +64,16 @@ Proyecto backend desarrollado en Java.
 ## 📊 Estadísticas GitHub
 
 <div align="center">
-
-![GitHub Stats](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Gabriel-marchante&theme=tokyonight)
-![Top Languages](https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Gabriel-marchante&theme=tokyonight)
-
+  <table>
+    <tr>
+      <td>
+        <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Gabriel-marchante&theme=tokyonight" />
+      </td>
+      <td>
+        <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Gabriel-marchante&theme=tokyonight" />
+      </td>
+    </tr>
+  </table>
 </div>
 
 ---
@@ -84,6 +90,6 @@ Proyecto backend desarrollado en Java.
 
 <div align="center">
 
-*"Si puedes imaginarlo, puedes programarlo."* 
+*"Si puedes imaginarlo, puedes programarlo."* ⭐
 
 </div>
