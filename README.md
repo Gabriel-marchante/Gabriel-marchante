@@ -43,23 +43,39 @@
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black)
 
+
 ---
+
 
 ## 🚀 Proyectos Destacados
 
 ### 🎮 [Retro Games Portal](https://github.com/Gabriel-marchante/Retro-Games-Portal)
-Portal web de juegos retro clásicos con interfaz nostálgica.
-`HTML` `CSS` `JavaScript`
+Portal web de juegos retro clásicos (Pac-Man, Snake, Bomberman...) con rankings mundiales, estadísticas personales y gestión de usuarios.
+`Nodejs` `Express` `MySQL`
 
-### 🤖 [Model Context Protocol](https://github.com/Gabriel-marchante/Model-Context-Protocol)
-Colección de servidores MCP personalizados para extender las capacidades de la IA con herramientas y servicios externos, siguiendo el estándar abierto de Anthropic.
-`MCP` `AI` `HTML`
+### 🤖 [Presantis](https://github.com/Gabriel-marchante/Presantis)
+ Plataforma de control horario laboral adaptada a la normativa española. Fichaje móvil, gestión de vacaciones, historial de jornadas y panel de administración. Para empresas de cualquier tamaño. 
+ `Java` `Vuejs` `Flutter`
 
 ### 🗄️ [Prisma](https://github.com/Gabriel-marchante/Prisma)
-Proyecto backend desarrollado en Java.
+Plataforma de streaming de vídeo tipo Netflix con microservicios.
 `Java` `Hibernate`
 
+
 ---
+
+
+## 🕹️ Mi Mini Breakout — Gráfico de Contribuciones
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph.svg">
+  <img alt="Breakout contribution graph" src="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph.svg">
+</picture>
+
+
+---
+
 
 ## 📊 Estadísticas GitHub
 
@@ -76,17 +92,9 @@ Proyecto backend desarrollado en Java.
   </table>
 </div>
 
----
-
-## 🕹️ Mi Mini Breakout — Gráfico de Contribuciones
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph.svg">
-  <img alt="Breakout contribution graph" src="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph.svg">
-</picture>
 
 ---
+
 
 <div align="center">
 
