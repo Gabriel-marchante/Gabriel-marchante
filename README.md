@@ -24,6 +24,24 @@
 
 ---
 
+
+## 🚀 Proyectos Destacados
+
+### 🎮 [Retro Games Portal](https://github.com/Gabriel-marchante/Retro-Games-Portal)
+Portal web de juegos retro clásicos (Pac-Man, Snake, Bomberman...) con rankings mundiales, estadísticas personales y gestión de usuarios.
+`Nodejs` `Express` `MySQL`
+
+### 🤖 [Presantis](https://github.com/Gabriel-marchante/Presantis)
+ Plataforma de control horario laboral adaptada a la normativa española. Fichaje móvil, gestión de vacaciones, historial de jornadas y panel de administración. Para empresas de cualquier tamaño. 
+ `Java` `Vuejs` `Flutter`
+
+### 🗄️ [Prisma](https://github.com/Gabriel-marchante/Prisma)
+Plataforma de streaming de vídeo tipo Netflix con microservicios.
+`Java` `Hibernate`
+
+
+---
+
 ## 🛠️ Stack Tecnológico
 
 ### **Lenguajes de Programación**
@@ -57,23 +75,6 @@
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black)
 
-
----
-
-
-## 🚀 Proyectos Destacados
-
-### 🎮 [Retro Games Portal](https://github.com/Gabriel-marchante/Retro-Games-Portal)
-Portal web de juegos retro clásicos (Pac-Man, Snake, Bomberman...) con rankings mundiales, estadísticas personales y gestión de usuarios.
-`Nodejs` `Express` `MySQL`
-
-### 🤖 [Presantis](https://github.com/Gabriel-marchante/Presantis)
- Plataforma de control horario laboral adaptada a la normativa española. Fichaje móvil, gestión de vacaciones, historial de jornadas y panel de administración. Para empresas de cualquier tamaño. 
- `Java` `Vuejs` `Flutter`
-
-### 🗄️ [Prisma](https://github.com/Gabriel-marchante/Prisma)
-Plataforma de streaming de vídeo tipo Netflix con microservicios.
-`Java` `Hibernate`
 
 ---
 
