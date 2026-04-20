@@ -75,19 +75,6 @@ Portal web de juegos retro clásicos (Pac-Man, Snake, Bomberman...) con rankings
 Plataforma de streaming de vídeo tipo Netflix con microservicios.
 `Java` `Hibernate`
 
-
----
-
-
-## 🕹️ Mi Mini Breakout — Gráfico de Contribuciones
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph.svg">
-  <img alt="Breakout contribution graph" src="https://raw.githubusercontent.com/Gabriel-marchante/Gabriel-marchante/output/breakout-contribution-graph.svg">
-</picture>
-
-
 ---
 
 
